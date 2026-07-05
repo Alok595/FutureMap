@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import connectToDatabase from '@/lib/mongodb';
-import VideoReel from '@/models/VideoReel';
+import Reel from '@/models/Reel';
 
 async function isAdmin() {
   const session = await getServerSession(authOptions);
@@ -26,7 +26,7 @@ export async function PUT(req) {
 
     const data = await req.json();
     
-    const updatedReel = await VideoReel.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+    const updatedReel = await Reel.findByIdAndUpdate(id, data, { new: true, runValidators: true });
     
     if (!updatedReel) {
       return NextResponse.json({ message: 'Reel not found' }, { status: 404 });
